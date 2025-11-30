@@ -18,7 +18,7 @@ The following steps outline the process for conducting experiments on the Band d
 
 2.Run 2.train_model.py to train the baseline model.
 
-3.Run 3.RIFair_attack.py, to generate false biased, false fair, and true biased adversarial instances.
+3.Run 3.RIFair_attack.py, 4.Robustness_attack.py, and 5.Fairness_attack.py, to generate the inaccurate or unfair adversarial instances.
 
 
 # Exporting experiment results
