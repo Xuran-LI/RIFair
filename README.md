@@ -1,29 +1,21 @@
 # RIFair
 
-Code for RIFair: "Perturbation Effects on Accuracy and Individual Fairness among Similar Individuals"
+This repository provides the implementation of **RIFair** for *Perturbation Effects on Accuracy and Individual Fairness*. 
 
-# Package Requirements:
-python 3.10 
-TensorFlow 2.12.0,
-Keras 2.12.0, 
-PyTorch 2.9.1. 
+RIFair is a framework for evaluating **robust individual fairness** in NLP models by generating *semantically equivalent and imperceptible adversarial similar instances* to expose violations of robustness and fairness under controlled perturbations.
 
+### Package Requirements  
+Python 3.10, TensorFlow 2.12.0, Keras 2.12.0, and PyTorch 2.0.1.
 
-# RIFair for generating inaccurate or unfair data.
+### Usage  
 
-This package provides code for evaluating robust individual fairness using the RIFair method. 
-The following steps outline the process for conducting experiments on the Band dataset:
+RIFair generates inaccurate or unfair adversarial similar instances through the following pipeline. 
 
-1.Run 1.prepare_data.py to prepare train and test data for the experiment.
+First, run `1.get_attack_token.py` and `2.get_attack_token_candidates.py` to extract high-frequency tokens and construct their **semantically equivalent replacement candidates**. Next, run `3.get_attack_candidates_similar_scores.py` to compute similarity scores using **NLI-based entailment** and **cosine distance**, ensuring that perturbations preserve semantics. 
 
-2.Run 2.train_model.py to train the baseline model.
-
-3.Run 3.RIFair_attack.py, 4.Robustness_attack.py, and 5.Fairness_attack.py, to generate the inaccurate or unfair adversarial instances.
+Then, run `5.1.get_importance_test_data.py`, `5.2.get_token_importance.py`, and `5.3.calculate_perturbation_importance.py` to estimate **black-box token importance** for guiding perturbations. 
 
 
-# Exporting experiment results
+Finally, run `7.1.get_RIF_perturbation_result.py` to generate **unrobust or unfair adversarial similar instances** under the RIFair framework.
 
-5.Run 6.get_result.py to export the experiment results as worksheets.
-
-
-If you have any questions or need further assistance, please reach out to us.
+If you have any questions or need further assistance, feel free to reach out.
