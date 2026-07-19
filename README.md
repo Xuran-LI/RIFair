@@ -1,6 +1,6 @@
 # RIFair
 
-This repository provides the implementation of **RIFair** for *Perturbation Effects on Accuracy and Individual Fairness*. 
+This repository provides the implementation of **RIFair** for [*Perturbation Effects on Accuracy and Individual Fairness*](https://arxiv.org/abs/2404.01356).
 
 RIFair is a framework for evaluating **robust individual fairness** in NLP models by generating *semantically equivalent and imperceptible adversarial similar instances* to expose violations of robustness and fairness under controlled perturbations.
 
