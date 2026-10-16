@@ -7,7 +7,7 @@ Code for *Perturbation Effects on Robustness and Individual Fairness* (KDD '26)
 
 📄 **KDD '26** · [DOI 10.1145/3770855.3817848](https://doi.org/10.1145/3770855.3817848) · [arXiv:2404.01356](https://arxiv.org/abs/2404.01356)
 
-> **TL;DR** — A small, meaning-preserving edit to a sentence can break a model's prediction (robustness) *and* make it treat two similar people differently (individual fairness). Existing evaluations check these one at a time and miss the cases where only one of them breaks. We formalise **Robust Individual Fairness (RIF)** — under semantic-preserving perturbations, predictions must stay both *correct* and *consistent across similar individuals* — and introduce **RIFair**, a black-box attack that finds the semantically equivalent sentence pairs that violate it. Across four transformer backbones and four datasets, robustness-only and fairness-only metrics miss **Robust Biased** and **Unrobust Fair** behaviour, and even rank the models in a different order; RIF exposes both.
+> **TL;DR** — A small, meaning-preserving edit to a sentence can break a model's prediction (robustness) *and* make it treat two similar people differently (individual fairness). Existing evaluations check these metrics separately and miss the cases where only one of them breaks. We formalise **Robust Individual Fairness (RIF)** — under semantic-preserving perturbations, predictions must stay both *correct* and *consistent across similar individuals* — and introduce **RIFair**, a black-box attack that finds the semantically equivalent sentence pairs that violate it. Across four transformer backbones and four datasets, robustness-only and fairness-only metrics miss **Robust Biased** and **Unrobust Fair** behaviour, and even rank the models in a different order; RIF exposes both.
 
 ---
 
@@ -28,11 +28,13 @@ Take two similar instances `v, v′ ∈ I(v)` that share a true label `y` and di
 
 <p align="center"><img src="figures/rif_quadrants.png" width="960" alt="The robustness-fairness relationship: Robust Fair, Robust Biased, Unrobust Fair and Unrobust Biased quadrants"></p>
 
-Only the top-left case, **Robust Fair (RF)**, is acceptable. The other three are the ways a model can pass one kind of test while failing the other:
+Only the top-left case, **Robust Fair (RF)**, is acceptable. 
+
+The other three are the ways a model can pass one kind of test while failing the other:
 
 - **Robust Biased (RB)** — the original instance is still classified correctly, but its counterpart now gets a different answer. A robustness-only evaluation never notices.
 - **Unrobust Fair (UF)** — both instances get the same answer, so an individual-fairness metric is satisfied, but the edit made that answer wrong. A fairness-only evaluation never notices.
-- **Unrobust Biased (UB)** — wrong *and* inconsistent. The one case most existing evaluations do catch.
+- **Unrobust Biased (UB)** — wrong *and* biased. The one case most existing evaluations do catch.
 
 These are not hypothetical. RIFair finds all three on real models, with edits a human would not notice:
 
@@ -212,29 +214,4 @@ This work is partially supported by the National Key R&D Program of China (Grant
 
 Related: [Accurate Fairness](https://github.com/Xuran-LI/AccurateFairnessCriterion) (AAAI-23) — the accuracy-side counterpart of this criterion, where the fairness confusion matrix (True / False × Fair / Biased) was first introduced.
 
-Questions or issues: open a GitHub issue or contact `xuran.li1@unsw.edu.au`.
-
-
-
-
-# RIFair
-
-This repository provides the implementation of **RIFair** for [*Perturbation Effects on Accuracy and Individual Fairness*](https://arxiv.org/abs/2404.01356).
-
-RIFair is a framework for evaluating **robust individual fairness** in NLP models by generating *semantically equivalent and imperceptible adversarial similar instances* to expose violations of robustness and fairness under controlled perturbations.
-
-### Package Requirements  
-Python 3.10, TensorFlow 2.12.0, Keras 2.12.0, and PyTorch 2.0.1.
-
-### Usage  
-
-RIFair generates inaccurate or unfair adversarial similar instances through the following pipeline. 
-
-First, run `1.get_attack_token.py` and `2.get_attack_token_candidates.py` to extract high-frequency tokens and construct their **semantically equivalent replacement candidates**. Next, run `3.get_attack_candidates_similar_scores.py` to compute similarity scores using **NLI-based entailment** and **cosine distance**, ensuring that perturbations preserve semantics. 
-
-Then, run `5.1.get_importance_test_data.py`, `5.2.get_token_importance.py`, and `5.3.calculate_perturbation_importance.py` to estimate **black-box token importance** for guiding perturbations. 
-
-
-Finally, run `7.1.get_RIF_perturbation_result.py` to generate **unrobust or unfair adversarial similar instances** under the RIFair framework.
-
-If you have any questions or need further assistance, feel free to reach out.
+Questions or issues: open a GitHub issue or contact `lixuran93@gmail.com`.
